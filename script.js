@@ -10,8 +10,10 @@ const randomNumberGenerator = (num) => Math.floor(Math.random() * num);
  *   "paper"    for 1
  *   "scissors" for 2
  * */
-const getComputerChoice = (num) =>
-  num === 0 ? "rock" : num === 1 ? "paper" : "scissors";
+const getComputerChoice = () => {
+  const num = randomNumberGenerator(3);
+  return num === 0 ? "rock" : num === 1 ? "paper" : "scissors";
+};
 
 /**
  * Gets human choice for rock, paper, scissors.
@@ -66,7 +68,35 @@ const playRound = (humanChoice, computerChoice) => {
   console.log(outcome);
 };
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+/**
+ * Game Play Logic
+ * */
+function playGame() {
+  let numberOfRounds = 5;
+  while (numberOfRounds > 0) {
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+    if (!validateHumanChoice(humanSelection)) {
+      alert("Enter rock, paper, or scissors");
+    } else {
+      playRound(humanSelection, computerSelection);
+      numberOfRounds--;
+    }
+  }
 
-playRound(humanSelection, computerSelection);
+  if (humanScore > computerScore) {
+    console.log(
+      "You Win the Game\n",
+      `Your Score: ${humanScore}\n Computer Score: ${computerScore}`,
+    );
+  } else if (humanScore < computerScore) {
+    console.log(
+      "You Lose the Game\n",
+      `Your Score: ${humanScore}\n Computer Score: ${computerScore}`,
+    );
+  } else {
+    console.log("Tie!");
+  }
+}
+
+playGame();
