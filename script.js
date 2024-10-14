@@ -65,38 +65,36 @@ const playRound = (humanChoice, computerChoice) => {
     outcome = "You Win! Scissors beats Paper";
   }
 
-  console.log(outcome);
+  document.querySelector(".round-result").textContent = outcome;
+  document.querySelector(".humanscore").textContent =
+    "Your Score: " + humanScore;
+  document.querySelector(".computerscore").textContent =
+    "Computer Score: " + computerScore;
+  if (humanScore === 5 || computerScore === 5) {
+    document.querySelector("body").removeChild(rockBtn);
+    document.querySelector("body").removeChild(paperBtn);
+    document.querySelector("body").removeChild(scissorsBtn);
+
+    if (humanScore > computerScore)
+      document.querySelector(".round-result").textContent = "You WIN!!!";
+    if (humanScore < computerScore)
+      document.querySelector(".round-result").textContent = "You LOSE!!!";
+  }
 };
 
 /**
- * Game Play Logic
+ * UI
  * */
-function playGame() {
-  let numberOfRounds = 5;
-  while (numberOfRounds > 0) {
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    if (!validateHumanChoice(humanSelection)) {
-      alert("Enter rock, paper, or scissors");
-    } else {
-      playRound(humanSelection, computerSelection);
-      numberOfRounds--;
-    }
-  }
+const rockBtn = document.querySelector(".rockBtn");
+const paperBtn = document.querySelector(".paperBtn");
+const scissorsBtn = document.querySelector(".scissorsBtn");
 
-  if (humanScore > computerScore) {
-    console.log(
-      "You Win the Game\n",
-      `Your Score: ${humanScore}\n Computer Score: ${computerScore}`,
-    );
-  } else if (humanScore < computerScore) {
-    console.log(
-      "You Lose the Game\n",
-      `Your Score: ${humanScore}\n Computer Score: ${computerScore}`,
-    );
-  } else {
-    console.log("Tie!");
-  }
-}
-
-playGame();
+rockBtn.addEventListener("click", () => {
+  playRound("rock", getComputerChoice());
+});
+paperBtn.addEventListener("click", () => {
+  playRound("paper", getComputerChoice());
+});
+scissorsBtn.addEventListener("click", () => {
+  playRound("scissors", getComputerChoice());
+});
